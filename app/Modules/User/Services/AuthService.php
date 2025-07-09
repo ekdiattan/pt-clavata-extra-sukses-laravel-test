@@ -20,16 +20,14 @@ class AuthService
             'email' => 'required|email',
             'password' => 'required',
         ]);
-
+        
         if (!Auth::attempt($credentials)) {
-            return response()->json([
-                'message' => 'Invalid credentials'
-            ], 401);
+          throw new \Exception('Invalid credentials');
         }
         
         $user = Auth::user();
         $token = $user->createToken('auth_token')->plainTextToken;
-
+        
         return $token;
     }
 

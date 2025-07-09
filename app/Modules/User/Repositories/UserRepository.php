@@ -18,7 +18,7 @@ class UserRepository
         return $this->model->all();
     }
 
-    public function create(array $data)
+    public function create($data)
     {
         return $this->model->create($data);
     }
@@ -28,7 +28,7 @@ class UserRepository
         return $this->model->findOrFail($id);
     }
 
-    public function update(array $data, $id)
+    public function update($data, $id)
     {
         return $this->model->findOrFail($id)->update($data);
     }

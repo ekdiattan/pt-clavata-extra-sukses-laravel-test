@@ -2,12 +2,12 @@
 
 namespace App\Modules\User\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Modules\User\Requests\CreateUserRequest;
-use App\Modules\User\Requests\UpdateUserRequest;
 use App\Modules\User\Services\UserService;
 use App\Modules\User\Resources\UserResource;
-use Illuminate\Http\Request;
+use App\Modules\User\Requests\CreateUserRequest;
+use App\Modules\User\Requests\UpdateUserRequest;
 
 class UserController extends Controller
 {
@@ -21,11 +21,14 @@ class UserController extends Controller
     public function index()
     {
         try {
+
             $users = $this->service->index();
+
             return $this->successResponse(
                 UserResource::collection($users),
                 'Users retrieved successfully'
             );
+
         } catch (\Exception $e) {
             return $this->errorResponse(
                 $e->getMessage(),
@@ -37,16 +40,21 @@ class UserController extends Controller
     public function store(CreateUserRequest $request)
     {
         try {
-            $user = $this->service->store($request->validated());
-            
+
+            DB::beginTransaction();
+            $user = $this->service->store($request);
+
         } catch (\Exception $e) {
+            DB::rollBack();
+            
             return $this->errorResponse(
                 $e->getMessage(),
                 $e->getCode() ?: 400
             );
-
+            
         }
 
+        DB::commit();
         return $this->successResponse(
             new UserResource($user),
             'User created successfully',
@@ -76,12 +84,13 @@ class UserController extends Controller
            'User retrieved successfully'
        );
     }
-    
-    public function update($request, $id)
+
+    public function update($id, UpdateUserRequest $request)
     {
         try {
-            $user = $this->service->update($request->validated(), $id);
-           
+
+            $user = $this->service->update($request, $id);
+            
         } catch (\Exception $e) {
             if ($e->getCode() === 404) {
                 return $this->notFoundResponse($e->getMessage());
@@ -93,7 +102,7 @@ class UserController extends Controller
             
         }
 
-         return $this->successResponse(
+        return $this->successResponse(
                 new UserResource($user),
                 'User updated successfully'
         );

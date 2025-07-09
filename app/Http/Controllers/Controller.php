@@ -23,7 +23,7 @@ abstract class Controller
             'data' => $data,
         ], $code);
     }
-
+    
     /**
      * Error response method.
      *

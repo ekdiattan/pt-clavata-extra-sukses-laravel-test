@@ -29,7 +29,9 @@ class UserService
 
     public function update($request, $id)
     {
-        return $this->repository->update($request->all(), $id);
+        $this->repository->update($request->all(), $id);
+
+        return $this->repository->find($id);
     }
     
     public function destroy($id)
