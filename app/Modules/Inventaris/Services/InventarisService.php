@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Modules\User\Services;
-use App\Modules\User\Repositories\UserRepository;
+namespace App\Modules\Inventaris\Services;
+use App\Modules\Inventaris\Repositories\InventarisRepository;
 
-class UserService
+class InventarisService
 {
     protected $repository;
 
-    public function __construct(UserRepository $repository)
+    public function __construct(InventarisRepository $repository)
     {
         $this->repository = $repository;
     }

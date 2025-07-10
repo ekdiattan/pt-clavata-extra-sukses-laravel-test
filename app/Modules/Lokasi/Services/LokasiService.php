@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Modules\User\Services;
-use App\Modules\User\Repositories\UserRepository;
+namespace App\Modules\Lokasi\Services;
+use App\Modules\Lokasi\Repositories\LokasiRepository;
 
-class UserService
+class LokasiService
 {
     protected $repository;
 
-    public function __construct(UserRepository $repository)
+    public function __construct(LokasiRepository $repository)
     {
         $this->repository = $repository;
     }

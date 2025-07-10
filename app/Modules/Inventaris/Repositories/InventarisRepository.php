@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Modules\Inventaris\Repositories;
+use App\Modules\Inventaris\Models\Inventaris;
+
+class InventarisRepository
+{
+    protected $model;
+
+    public function __construct(Inventaris $model)
+    {
+        $this->model = $model;
+    }
+
+    public function all()
+    {
+        return $this->model->all();
+    }
+
+    public function create($data)
+    {
+        return $this->model->create($data);
+    }
+
+    public function find($id)
+    {
+        return $this->model->findOrFail($id);
+    }
+
+    public function update($data, $id)
+    {
+        return $this->model->findOrFail($id)->update($data);
+    }
+    
+    public function delete($id)
+    {
+        return $this->model->findOrFail($id)->delete();
+    }
+    
+}

@@ -1,15 +1,17 @@
 <?php
 
-namespace App\Modules\User\Services;
-use App\Modules\User\Repositories\UserRepository;
+namespace App\Modules\Mutasi\Services;
+use App\Modules\Mutasi\Repositories\MutasiRepository;
+use App\Modules\Produk\Repositories\ProdukRepository;
 
-class UserService
+class MutasiService
 {
-    protected $repository;
+    protected $repository, $produkRepository;
 
-    public function __construct(UserRepository $repository)
+    public function __construct(MutasiRepository $repository, ProdukRepository $produkRepository)
     {
         $this->repository = $repository;
+        $this->produkRepository = $produkRepository;
     }
     
     public function index()
@@ -37,5 +39,10 @@ class UserService
     public function destroy($id)
     {
         return $this->repository->delete($id);
+    }
+
+    public function historyByProduk($id)
+    {
+        return $this->produkRepository->historyByProduk($id);
     }
 }

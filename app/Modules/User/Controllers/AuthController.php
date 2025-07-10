@@ -28,14 +28,13 @@ class AuthController extends Controller
                 $e->getMessage(),
                 $e->getCode() ?: 400
             );
-            
         }
 
-        return $this->successResponse(
-            $login,
-            'User has logged in successfully!',
-            201
-        );
+        return response()->json([
+            'success' => true,
+            'message' => 'Login successfully',
+            'token' => $login
+        ]);
     }
     
     public function logout(Request $request)
