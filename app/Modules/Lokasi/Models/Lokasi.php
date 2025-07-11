@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Modules\Lokasi\Models;
+use App\Modules\Mutasi\Models\Mutasi;
 use App\Modules\Produk\Models\Produk;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Modules\ProdukLokasi\Models\ProdukLokasi;
 
 class Lokasi extends Model
 {
@@ -14,10 +16,4 @@ class Lokasi extends Model
     protected $guarded = [
 
     ];
-    
-    public function produks()
-    {
-        return $this->belongsToMany(Produk::class, 'produk_lokasi')->withPivot('stok')->withTimestamps();
-    }
-
 }

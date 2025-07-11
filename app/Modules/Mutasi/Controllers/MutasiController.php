@@ -42,11 +42,12 @@ class MutasiController extends Controller
         try {
 
             DB::beginTransaction();
-            $Mutasi = $this->service->store($request);
+
+            $user = auth()->user();
+            $Mutasi = $this->service->store($request, $user);
 
         } catch (\Exception $e) {
             DB::rollBack();
-            
             return $this->errorResponse(
                 $e->getMessage(),
                 $e->getCode() ?: 400
@@ -131,24 +132,31 @@ class MutasiController extends Controller
 
     public function historyByProduk($id)
     {
-        $produk = $this->service->historyByProduk($id);
-        
+        $mutasis = $this->service->historyByProduk($id);
+
         return response()->json([
             'success' => true,
-            'produk' => $produk->nama_produk,
-            'mutasi' => $produk->mutasis
+            'produk_id' => $mutasis->produk_id,
+            'mutasi' => $mutasis->mutasis
         ]);
     }
+    
+    public function historyByUser($id)
+    {
+        try {
+            $user = $this->service->historyByUser($id);
 
-    // History mutasi per user
-    // public function historyByUser($id)
-    // {
-    //     $user = User::with('mutasis.produk', 'mutasis.lokasi')->findOrFail($id);
-        
-    //     return response()->json([
-    //         'success' => true,
-    //         'user' => $user->name,
-    //         'mutasi' => $user->mutasis
-    //     ]);
-    // }
+            return response()->json([
+                'success' => true,
+                'user' => $user->name,
+                'mutasi' => $user->mutasis
+            ]);
+        } catch (\Exception $e) {
+            return $this->errorResponse(
+                $e->getMessage(),
+                $e->getCode() ?: 400
+            );
+        }
+    }
+
 }

@@ -37,4 +37,19 @@ class ProdukLokasiRepository
         return $this->model->findOrFail($id)->delete();
     }
     
+    public function fetchProdukLokasiByProdukIdLokasiId($produkId, $lokasiId)
+    {
+        return $this->model->where('produk_id', $produkId)->where('lokasi_id', $lokasiId)->first();
+    }
+
+    public function countHandleStock($id, $jumlah, $operator)
+    {
+        
+        $produkLokasi = $this->model->findOrFail($id);
+        $stok = $operator == '+' ? $produkLokasi->stok + $jumlah : $produkLokasi->stok - $jumlah;
+        $this->model->findOrFail($id)->update(['stok' => $stok]);
+
+        return $stok;
+    }
+    
 }

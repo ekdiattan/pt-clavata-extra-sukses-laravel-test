@@ -3,8 +3,8 @@
 namespace App\Modules\User\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Modules\User\Requests\LoginRequest;
 use App\Modules\User\Services\AuthService;
 
 class AuthController extends Controller
@@ -16,7 +16,7 @@ class AuthController extends Controller
         $this->service = $service;
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
         try {
 
@@ -24,10 +24,7 @@ class AuthController extends Controller
 
         } catch (\Exception $e) {
 
-            return $this->errorResponse(
-                $e->getMessage(),
-                $e->getCode() ?: 400
-            );
+            return $this->errorResponse($e->getMessage());
         }
 
         return response()->json([
@@ -36,7 +33,7 @@ class AuthController extends Controller
             'token' => $login
         ]);
     }
-    
+
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();

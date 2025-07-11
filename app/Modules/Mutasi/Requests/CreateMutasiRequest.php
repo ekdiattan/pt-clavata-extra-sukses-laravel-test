@@ -20,12 +20,16 @@ class CreateMutasiRequest extends FormRequest
      * Get the validation rules that apply to the request.
      *
      * @return array
-     */
+    */
 
     public function rules()
     {
         return [
-            
+            'produk_lokasi_id' => ['required', 'exists:produk_lokasi,id'],
+            'jenis_mutasi' => ['required', 'in:masuk,keluar'],
+            'tanggal' => ['required', 'date'],
+            'jumlah' => ['required', 'numeric'],
+            'keterangan' => ['required', 'string']
         ];
     }
 }

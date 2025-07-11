@@ -38,4 +38,6 @@ class ProdukLokasiService
     {
         return $this->repository->delete($id);
     }
+
+    
 }

@@ -15,7 +15,6 @@ class AuthService
 
     public function login($request)
     {
-        
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
@@ -24,7 +23,7 @@ class AuthService
         if (!Auth::attempt($credentials)) {
           throw new \Exception('Invalid credentials');
         }
-        
+
         $user = Auth::user();
         $token = $user->createToken('auth_token')->plainTextToken;
         

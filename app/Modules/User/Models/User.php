@@ -29,4 +29,9 @@ class User extends Authenticatable
             'password' => 'hashed'
         ];
     }
+    
+    public function mutasis()
+    {
+        return $this->hasMany(Mutasi::class);
+    }
 }
