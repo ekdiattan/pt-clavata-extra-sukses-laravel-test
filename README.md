@@ -9,9 +9,9 @@ PHP Version : 8.3
 
 Install Laravel
 
-jalan kan composer install
-Jalankan cp .env.example .env
-jalankan php artisan key:generate
-jalankan php artisan migrate
+-- jalan kan composer install
+-- Jalankan cp .env.example .env
+-- jalankan php artisan key:generate
+-- jalankan php artisan migrate
 
 jalankan php artisan serve
